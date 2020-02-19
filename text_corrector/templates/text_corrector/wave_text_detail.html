@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+    <div class="row">
         <table class="table table-bordered border table-striped">
           <tbody>
             <tr class="bg-success">
@@ -20,6 +21,6 @@
           </tbody>
         </table>
         <a href="{% url 'text_corrector:wave_list' %}" class="btn btn-primary">Wróć do listy plików</a>
-
+    </div>
 
 {% endblock content %}

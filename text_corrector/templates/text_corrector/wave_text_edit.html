@@ -1,3 +1,4 @@
+{% extends 'text_corrector/base.html' %}
 {% load static %}
 {% load widget_tweaks %}
 
@@ -44,8 +45,7 @@
       </nav>
 
       <!-- Page Content -->
-      <div class="container main-content">
-
+      {% block content %}
         <div class="jumbotron align-items-center">
           <h1 class="display-6  text-justified">Edycja pliku - bądź ostrożny!</h1>
           <p class="lead">Uważnie wysłuchaj pliku .wav na tej stronie lub pobranego wcześniej.
@@ -80,8 +80,7 @@
           <a href="{% url 'text_corrector:wave_list' %}" class="btn btn-primary">Wróć do listy plików</a>
 
         </form>
-
-      </div>
+        {% endblock content %}
 
        <!-- Footer -->
       <footer class="py-5 bg-dark">
@@ -98,11 +97,14 @@
       <script>
         var stickyFooter = new StickyFooter('.main-content');
       </script>
-    <script>
-      $("#wav").on("error", function (e) {
-        alert("Brak pliku .wav!");
-    });
-    </script>
+      {% block additional_js %}
+        <script>
+          $("#wav").on("error", function (e) {
+            alert("Brak pliku .wav!");
+          });
+        </script>
+      {% endblock additional_js %}
+
     </body>
 
 </html>

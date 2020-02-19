@@ -48,11 +48,9 @@
 
       <!-- Page Content -->
       <div class="container main-content">
-        <div class="row">
           {% block content %}
 
           {% endblock content %}
-        </div>
       </div>
 
        <!-- Footer -->
@@ -70,6 +68,8 @@
       <script>
         var stickyFooter = new StickyFooter('.main-content');
       </script>
+    {% block additional_js %}
+    {% endblock additional_js %}
     </body>
 
 </html>
