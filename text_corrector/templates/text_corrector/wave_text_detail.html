@@ -1,0 +1,25 @@
+{% extends 'text_corrector/base.html' %}
+{% load static %}
+
+{% block content %}
+        <table class="table table-bordered border table-striped">
+          <tbody>
+            <tr class="bg-success">
+                <td><h3><a href="{% url 'text_corrector:download_file' wave_text.name %}" >{{ wave_text.name }}</a></h3></td>
+                <td><h3>Czy poprawiony? - {{ wave_text.modified }}</h3></td>
+            </tr>
+            <tr>
+                <td colspan="2"><h3>{{ wave_text.before_normalization }}</h3>
+                  <a href="{% url 'text_corrector:wave_text_edit' pk=wave_text.pk %}"><i class="fas fa-edit fa-2x float-right"></i></a>
+              </td>
+
+            </tr>
+            <tr>
+                <td colspan="2"><h3>{{ wave_text.after_normalization }}</h3></td>
+            </tr>
+          </tbody>
+        </table>
+        <a href="{% url 'text_corrector:wave_list' %}" class="btn btn-primary">Wróć do listy plików</a>
+
+
+{% endblock content %}

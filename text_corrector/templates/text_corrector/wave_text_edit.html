@@ -1,0 +1,108 @@
+{% load static %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="">
+      <meta name="author" content="">
+
+      <title>Toucan Giant-AI</title>
+     <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+
+      <!-- Bootstrap core CSS -->
+      <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+      <link href="{% static 'fontawesome-free-5.12.1-web/css/all.css' %}" rel="stylesheet">
+      <link href="{% static 'css/custom.css' %}" rel="stylesheet">
+
+    </head>
+
+    <body>
+
+      <!-- Navigation -->
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'text_corrector:index' %}">Toucan Giant-AI</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'text_corrector:wave_list' %}">Wave text editor</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'admin:login' %}">Zaloguj</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+      <!-- Page Content -->
+      <div class="container main-content">
+
+        <div class="jumbotron align-items-center">
+          <h1 class="display-6  text-justified">Edycja pliku - bądź ostrożny!</h1>
+          <p class="lead">Uważnie wysłuchaj pliku .wav na tej stronie lub pobranego wcześniej.
+            Jeśli jesteś <b>pewien</b>, że tekst odbiega od tego co usłyszałeś - zmień tekst. Po zakończeniu pracy z plikiem zapisz zmiany!</p>
+        </div>
+        <audio controls autoplay>
+            <source id="wav"
+                    src="{% url 'text_corrector:download_file' wave_text.name %}"
+                    type="audio/wav"
+                    onloadeddata="">
+            Your browser does not support the audio element.
+        </audio>
+
+        <form method="post" class="align-items-center" novalidate>
+          {% csrf_token %}
+
+          {% for hidden_field in form.hidden_fields %}
+            {{ hidden_field }}
+          {% endfor %}
+
+          {% for field in form.visible_fields %}
+            <div class="form-group align-items-center float-center">
+              <!--{{ field.label_tag }}-->
+              {% render_field field class="form-control" %}
+              {% if field.help_text %}
+                <small class="form-text text-muted">{{ field.help_text }}</small>
+              {% endif %}
+            </div>
+          {% endfor %}
+
+          <button type="submit" class="btn btn-danger">Potwierdź poprawność tekstu</button>
+          <a href="{% url 'text_corrector:wave_list' %}" class="btn btn-primary">Wróć do listy plików</a>
+
+        </form>
+
+      </div>
+
+       <!-- Footer -->
+      <footer class="py-5 bg-dark">
+        <div class="container">
+          <p class="m-0 text-center text-white">Toucan Systems &copy; Giant-AI, 2020</p>
+        </div>
+        <!-- /.container -->
+      </footer>
+
+      <!-- Bootstrap core JavaScript -->
+      <script src="{% static 'jquery/jquery.slim.min.js' %}"></script>
+      <script src="{% static 'jquery/sticky-footer.min.js' %}"></script>
+      <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <script>
+        var stickyFooter = new StickyFooter('.main-content');
+      </script>
+    <script>
+      $("#wav").on("error", function (e) {
+        alert("Brak pliku .wav!");
+    });
+    </script>
+    </body>
+
+</html>

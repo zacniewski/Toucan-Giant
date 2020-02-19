@@ -1,0 +1,87 @@
+{% extends 'text_corrector/base.html' %}
+{% load proper_paginate %}
+{% load url_replace %}
+
+{% block content %}
+
+    <div class="jumbotron align-items-center">
+      <h1 class="display-6  text-justified">Edycja tekstu dla plików .wav</h1>
+      <p class="lead">Pierwsza linia zawiera nazwę pliku,
+              druga - tekst przed normalizacją,
+              trzecia - tekst po normalizacji.
+          Edytowany jest <b>tylko</b> tekst przed normalizacją.</p>
+    </div>
+
+    {% for wt in texts %}
+        <table class="table table-bordered border table-striped">
+          <tbody>
+            <tr class="bg-success">
+              <td>Pobierz plik: <a href="{% url 'text_corrector:download_file' wt.name %}" >{{ wt.name }}</a></td>
+              <td>Czy poprawiony? - {{ wt.modified }}</td>
+            </tr>
+            <tr>
+              <td colspan="2">{{ wt.before_normalization }}
+                  <a href="{% url 'text_corrector:wave_text_edit' pk=wt.pk %}"><i class="fas fa-edit fa-2x float-right"></i></a>
+              </td>
+
+            </tr>
+            <tr>
+              <td colspan="2">{{ wt.after_normalization }}</td>
+            </tr>
+          </tbody>
+        </table>
+        <hr>
+    {% endfor %}
+
+    <!--
+    <nav aria-label="...">
+        {% if texts.has_other_pages %}
+            <ul class="pagination pagination-lg justify-content-center">
+                <li class="page-item"><a class="page-link" href="?page=1"><<</a></li>
+                {% for i in texts.paginator.page_range %}
+                    {% if texts.number == i %}
+                        <li class="page-item active" aria-current="page"><a class="page-link">{{ i }}</a></li>
+                    {% else %}
+                        <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                {% endfor %}
+                <li class="page-item"><a class="page-link" href="?page={{ texts.paginator.num_pages }}">Next</a></li>
+            </ul>
+        {% endif %}
+    </nav>
+    -->
+
+    {% if texts.has_other_pages %}
+        <ul class="pagination pagination-lg justify-content-center">
+            {% if texts.number == 1 %}
+                <li class="disabled"><a class="page-link">⇤</a></li>
+            {% else %}
+                <li><a class="page-link" href="?{% url_replace request 'page' 1 %}">⇤</a></li>
+            {% endif %}
+            {% if texts.has_previous %}
+                <li><a class="page-link" href="?{% url_replace request 'page' texts.previous_page_number %}">&laquo;</a></li>
+            {% else %}
+                <li class="disabled"><a class="page-link">&laquo;</a></li>
+            {% endif %}
+            {% for i in texts.paginator|proper_paginate:texts.number %}
+                {% if texts.number == i %}
+                    <!--<li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>-->
+                    <li class="page-item active" aria-current="page"><a class="page-link">{{ i }}</a></li>
+                {% else %}
+                    <li><a class="page-link" href="?{% url_replace request 'page' i %}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+            {% if texts.has_next %}
+                <li><a class="page-link" href="?{% url_replace request 'page' texts.next_page_number %}">&raquo;</a></li>
+            {% else %}
+                <li class="disabled"><a class="page-link">&raquo;</a></li>
+            {% endif %}
+            {% if texts.number == texts.paginator.num_pages %}
+                <li class="disabled"><a class="page-link">⇥</a></li>
+            {% else %}
+                <li><a class="page-link" href="?{% url_replace request 'page' texts.paginator.num_pages %}">⇥</a></li>
+            {% endif %}
+        </ul>
+    {% endif %}
+
+{% endblock content %}

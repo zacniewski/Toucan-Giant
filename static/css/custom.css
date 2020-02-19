@@ -1,0 +1,32 @@
+table.table-bordered {
+    border:1px solid black;
+    margin-top:20px;
+  }
+table.table-bordered > thead > tr > th {
+    border:1px solid black;
+}
+table.table-bordered > tbody > tr > td {
+    border:1px solid black;
+}
+
+.horizontal-center {
+    align-items: center;
+    min-width: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-width: 100vh; /* These two lines are counted as one :-)       */
+    text-align: center;
+    display: flex;
+}
+
+.jumbotron {
+    margin-top: 2rem;
+    padding: 2rem 1rem;
+    text-align: justified;
+}
+
+.form-control {
+    font-size: 2rem;
+}
+
+audio {
+    margin: 50px;
+}
