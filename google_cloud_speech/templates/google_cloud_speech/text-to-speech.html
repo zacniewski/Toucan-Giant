@@ -1,0 +1,26 @@
+{% extends 'text_corrector/base.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+
+        <div class="jumbotron align-items-center">
+          <h1 class="display-6  text-justified">Odsłuchaj plik!</h1>
+          <p class="lead">Uważnie wysłuchaj pliku .wav na tej stronie.
+            Jeśli jesteś <b>pewien</b>, że tekst odbiega od tego co usłyszałeś
+              - nie bądź bezczynny i zgłoś to do osoby zaangażowanej w projekt  &hearts;</p>
+        </div>
+
+        <div class="align-items-center col-lg-10">
+               <audio controls autoplay>
+                    <source id="wav"
+                            src="{% url 'google_cloud_speech:output_file' %}"
+                            type="audio/wav"
+                            onloadeddata="">
+                    Your browser does not support the audio element.
+                </audio>
+                <a href="{% url 'google_cloud_speech:podaj_tekst' %}" class="btn btn-primary">Wpisz nowy tekst</a>
+        </div>
+    </div>
+
+{% endblock content %}

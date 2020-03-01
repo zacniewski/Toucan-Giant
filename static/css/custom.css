@@ -30,3 +30,7 @@ table.table-bordered > tbody > tr > td {
 audio {
     margin: 50px;
 }
+
+#guzik-tts {
+    margin: 10px;
+}
