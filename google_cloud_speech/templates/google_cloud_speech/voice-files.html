@@ -1,0 +1,41 @@
+{% extends 'text_corrector/base.html' %}
+{% load static %}
+{% get_media_prefix as MEDIA_PREFIX %}
+{% load proper_paginate %}
+{% load url_replace %}
+
+{% block content %}
+    <div class="row">
+
+      <div class="jumbotron align-items-center">
+          <h1 class="display-6  text-justified">Edycja tekstu dla plików .wav</h1>
+          <p class="lead">Lista plików dźwiękowych, dostępnych w katalogu roboczym.
+              Odsłuchaj plik, a po wciśnięciu strzałki po prawej, zostanie uruchomiona
+              usługa Speech-To-Text.
+              Dostępny będzie rozpoznany tekst oraz prawdopodobieństwo jego poprawności.
+          </p>
+      </div>
+
+        {% for vf in voice_files_list %}
+            <table class="table table-bordered border table-striped">
+              <tbody>
+                <tr class="bg-warning">
+                    <td>Odtwórz plik <b>{{ vf.0 }}</b>:
+                      <audio controls autoplay>
+                        <source id="wav"
+                                src="{% url 'google_cloud_speech:output_file' vf.1 %}"
+                                type="audio/wav"
+                                onloadeddata="">
+                            Your browser does not support the audio element.
+                      </audio></td>
+                  <td><a href="{% url 'google_cloud_speech:speech_to_text' vf.0 %}"><i class="fas fa-share fa-2x float-right"></i></a></td>
+                </tr>
+              </tbody>
+            </table>
+            <hr>
+        {% endfor %}
+
+
+    </div>
+
+{% endblock content %}

@@ -34,7 +34,13 @@
                 <a class="nav-link" href="{% url 'text_corrector:wave_list' %}">Wave text editor</a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="{% url 'google_cloud_speech:podaj_tekst' %}">Google TTS</a>
+                <a class="nav-link" href="{% url 'google_cloud_speech:podaj_tekst' %}">Text-To-Speech</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="{% url 'google_cloud_speech:voice_files' %}">Speech-To-Text</a>
+              </li>
+                <li class="nav-item active">
+                <a class="nav-link" href="{% url 'google_cloud_speech:voice_files' %}">GCP-TF2 (not working yet)</a>
               </li>
               <li class="nav-item">
                 {% if request.user.is_authenticated %}

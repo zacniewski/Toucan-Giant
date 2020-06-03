@@ -1,3 +1,8 @@
 .idea/
 .env/
+my_env/
 __pycache__
+toucan*.json
+Toucan*.json
+*.wav
+data_dir/

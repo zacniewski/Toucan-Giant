@@ -5,8 +5,8 @@
     <div class="row">
 
         <div class="jumbotron align-items-center">
-          <h1 class="display-6  text-justified">Odsłuchaj plik!</h1>
-          <p class="lead">Uważnie wysłuchaj pliku .wav na tej stronie.
+          <h1 class="display-6  text-justified">Sprawdź tekst!</h1>
+          <p class="lead">Uważnie przeczytaj rozpoznany tekst na tej stronie.
             Jeśli jesteś <b>pewien</b>, że tekst odbiega od tego co usłyszałeś
               - nie bądź bezczynny i zgłoś to do osoby zaangażowanej w projekt  &hearts;</p>
         </div>
@@ -14,16 +14,17 @@
         <div class="d-inline col-lg-8">
                <audio controls autoplay>
                     <source id="wav"
-                            src="{% url 'google_cloud_speech:output_file' slug_text %}"
+                            src="{% url 'google_cloud_speech:output_file' local_file_name %}"
                             type="audio/wav"
                             onloadeddata="">
                     Your browser does not support the audio element.
                 </audio>
         </div>
         <div class="d-inline">
-            <a href="{% url 'google_cloud_speech:podaj_tekst' %}" class="btn btn-primary">Wpisz nowy tekst</a>
+            <a href="{% url 'google_cloud_speech:voice_files' %}" class="btn btn-primary">Przejdź do listy nagrań</a>
         </div>
-        <h3>[TEKST ORYGINALNY]: <b class="text-monospace">{{ text }}</b></h3>
+        <h3>[TEKST ROZPOZNANY]: <b class="text-monospace">{{ text }}</b></h3>
+        <h4>[Pewność rozpoznania]: {{ confidence }}</h4>
     </div>
 
 {% endblock content %}

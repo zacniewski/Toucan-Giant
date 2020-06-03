@@ -126,5 +126,5 @@ STATICFILES_DIRS = [
 ]
 
 # Google TextToSpeech
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.path.join(MEDIA_ROOT, 'ToucanTextToSpeech-f219d8fbe7ad.json')
-# GOOGLE_APPLICATION_CREDENTIALS="/home/artur/PROJECTS/WWW-PROJECTS/Waves-text-correction/data_dir/ToucanTextToSpeech-f219d8fbe7ad.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = os.path.join(MEDIA_ROOT, 'ToucanAssistant-2c0c5550273a.json')
+
