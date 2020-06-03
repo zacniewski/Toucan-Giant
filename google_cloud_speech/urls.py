@@ -5,6 +5,7 @@ app_name = "google_cloud_speech"
 
 urlpatterns = [
     path("podaj-tekst", views.podaj_tekst, name="podaj_tekst"),
+    path("text-to-audio/<str:file_name>", views.text_to_audio, name="text_to_audio"),
     path("text-to-speech/", views.text_to_speech, name="text_to_speech"),
     path("voice-files/", views.voice_files, name="voice_files"),
     path("load-voice-file/<str:path>/", views.load_voice_file, name="load_voice_file"),

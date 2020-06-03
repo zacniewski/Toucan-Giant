@@ -74,6 +74,62 @@ def text_to_speech(request):
     )
 
 
+def text_to_audio(request, file_name):
+
+    client = texttospeech.TextToSpeechClient()
+
+    # Set the text input from file to be synthesized
+    file_path = settings.MEDIA_ROOT + "/" + file_name
+    counter_of_lines = 0
+    with open(file_path, "r+") as fp:
+        directory_to_create = settings.MEDIA_ROOT + "/" + str(file_name)[:-4]
+        create_directory(directory_to_create)
+        for line in fp:
+            counter_of_lines += 1
+            print(line)
+            synthesis_input = texttospeech.SynthesisInput(text=line)
+
+            # Build the voice request, select the language code ("pl-PL") and the ssml
+            # voice gender ("neutral" or "male" or "female")
+            voice = texttospeech.VoiceSelectionParams(
+                language_code="pl-PL", ssml_gender=texttospeech.SsmlVoiceGender.MALE
+            )
+            # voices = client.list_voices(request={"language_code": "pl"})
+
+            # Select the type of audio file you want returned
+            audio_config = texttospeech.AudioConfig(
+                audio_encoding=texttospeech.AudioEncoding.LINEAR16
+            )
+
+            # Perform the text-to-speech request on the text input with the selected
+            # voice parameters and audio file type
+            response_from_tts = client.synthesize_speech(
+                request={
+                    "input": synthesis_input,
+                    "voice": voice,
+                    "audio_config": audio_config
+                }
+            )
+            path_to_save_audio = directory_to_create + "/" + str(counter_of_lines) + ".wav"
+
+            with open(path_to_save_audio, "wb") as out:
+                # Write the response to the output file.
+                out.write(response_from_tts.audio_content)
+                print(f'Audio content written to file {counter_of_lines}.wav"')
+
+    response = HttpResponse(f"Created {counter_of_lines} audio files.")
+    return response
+
+
+def create_directory(path):
+    try:
+        os.mkdir(path)
+    except OSError:
+        print("Creation of the directory %s failed" % path)
+    else:
+        print("Successfully created the directory %s " % path)
+
+
 def podaj_tekst(request):
     return render(request, "google_cloud_speech/podaj_tekst.html")
 
